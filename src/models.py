@@ -7,23 +7,50 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class Person(Base):
-    __tablename__ = 'person'
+class User(Base):
+    __tablename__ = 'user'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
+    username = Column(String(250), nullable=False)
     name = Column(String(250), nullable=False)
+    phone = Column(String(250), nullable=False)
 
-class Address(Base):
-    __tablename__ = 'address'
-    # Here we define columns for the table address.
+class Post(Base):
+    __tablename__ = 'post'
+    # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+    id_user = Column(Integer, ForeignKey('user.id'))
+    imagen = Column(String(250), nullable=False)
+    title = Column(String(250), nullable=False)
+    content = Column(String(250), nullable=False)
+
+class like(Base):
+    __tablename__ = 'like'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = Column(Integer, primary_key=True)
+    id_user = Column(Integer, ForeignKey('user.id'))
+    id_post = Column(Integer, ForeignKey('post.id'))
+
+class comment(Base):
+    __tablename__ = 'comment'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = Column(Integer, primary_key=True)
+    id_user = Column(Integer, ForeignKey('user.id'))
+    id_post = Column(Integer, ForeignKey('post.id'))
+    texto = Column(String(250), nullable=False)
+
+class collection(Base):
+    __tablename__ = 'collection'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = Column(Integer, primary_key=True)
+    id_user = Column(Integer, ForeignKey('user.id'))
+    id_post = Column(Integer, ForeignKey('post.id'))
+
 
     def to_dict(self):
         return {}
